@@ -1,35 +1,54 @@
 from collections import Counter
+from itertools import islice
 
-def get_club_recommendations(person, clubs, people_clubs):
+def get_club_recommendations(person, people_clubs):
     # Find the people that the person is already part of a club with
-    clubmates = [p for p, c in people_clubs.items() if person in c]
+    num = 0
+    attended = []
+    for c in people_clubs.items():
+        if person in c: 
+            num += 1 
+            attended.append(c)
     
-    # Create a list to store the club recommendations
-    recommendations = []
-    
-    # Iterate through the clubmates
-    for clubmate in clubmates:
-        # Iterate through the clubs the clubmate is a part of
-        for club in people_clubs[clubmate]:
-            # Check if the person is already a part of the club
-            if club not in clubs:
-                # If not, add the club to the recommendations list
-                recommendations.append(club)
-    
-    # Count number of each recommnedation
-    counter = Counter(recommendations)
+    # For each element in attended we find a club that has the most overlap with the current club
+    recommended = {}
+    for c in attended:
+        people = {}
+        for p in c:
+            people.add(p)
+        max = 0
+        cb = ""
+        for oc in people_clubs.items():
+            if oc != c:
+                res = 0;
+                for pl in oc:
+                    if pl in people: res += 1
+                res /= (len(oc) + len(c))
+                
+                if res > max:
+                    max = res 
+                    cb = oc
 
-    # Sort recommendations by frequency in descending order
-    sorted_recommendations = sorted(recommendations, key=counter.get, reverse=True)
+        recommended.add(cb)
+    # Depends on how many recommendations we want to have, we can have multiple layers of recommendations
+    return recommended
 
-    # Return sorted recommendations
-    return sorted_recommendations
+def get_club_interests(person, attended, people_clubs):
 
-def get_club_recs(person_clubs, person_classes, people_clubs, people_classes):
-
-    clubmates = [p for p, c in people_clubs.items() if person in c]
-
-    recommendations = []
-
-    return recommendations
+    ppl = {"person": 0}
+    for c in attended:
+        for p in c:
+            ppl[p] += 1/len(c)
+    res_ppl = take(10, sorted(ppl.items(), key=lambda x: x[1], reverse=True).items())
+    all_clubs = []
+    for pl in res_ppl:
+        # could've done better if pre-processed the people-clubs array
+        for c in people_clubs:
+            if c.member(pl):
+                for opl in res_ppl:
+                    if c.member(opl):
+                        all_clubs[c] += 1
+    res = take(10, sorted(all_clubs.items(), key=lambda x: x[1], reverse=False).items())
+    # return the 10 clubs that have the least interests in other important members
+    return res
 
