@@ -128,14 +128,6 @@ function App() {
         }}
     >
       <FormDialog />
-      <AppBar sx={{color: "#eba13f", backgroundColor: "#4a2c04"}}>
-        <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Camp@Brown
-          </Typography>
-          <Button color="inherit">Login</Button>
-        </Toolbar>
-      </AppBar>
       <Paper sx={{mt: 12, mr: 4, ml: 4, height: "80%", background: "#4a2c04"}}> 
         <Grid container sx={{p: 2, color:'white', height: '100%', alignItems: 'center'}}>
           <Grid item xs={1}>
