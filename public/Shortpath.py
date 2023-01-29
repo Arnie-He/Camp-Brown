@@ -18,7 +18,7 @@ def dijkstra(G, startingNode):
 	nodeCosts = defaultdict(lambda: float('inf'))
 	nodeCosts[startingNode] = 0
 	heap.heappush(pq, (0, startingNode))
- 
+
 	while pq:
 		# go greedily by always extending the shorter cost nodes first
 		_, node = heap.heappop(pq)
