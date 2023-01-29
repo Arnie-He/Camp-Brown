@@ -46,7 +46,7 @@ function Search() {
     >
         <Paper sx={{mt: 12, mr: 4, ml: 4, height: "80%", background: "#4a2c04"}}> 
             <Box sx={{m: 2, p:3, pt: 10}}>
-                <TextField id="outlined-basic" label="Arnie He" value={"Arnie He"} variant="outlined" sx={{backgroundColor: 'white', mb: 4}}/>
+                <TextField id="outlined-basic" value={"Arnie He"} variant="outlined" sx={{backgroundColor: 'white', mb: 4}}/>
                 <HorizontalLabelPositionBelowStepper sx={{color: 'white'}}/>
             </Box>
         </Paper>
